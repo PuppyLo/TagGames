@@ -271,7 +271,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Puzzle2_8
+      name: blank
       rect:
         serializedVersion: 2
         x: 400
@@ -302,10 +302,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      blank: 1186846431
       Puzzle2_3: -1491075895
       Puzzle2_6: 65901688
       Puzzle2_1: 1005980359
-      Puzzle2_8: 1186846431
       Puzzle2_4: 1170583943
       Puzzle2_5: -805461514
       Puzzle2_0: 1525056734
