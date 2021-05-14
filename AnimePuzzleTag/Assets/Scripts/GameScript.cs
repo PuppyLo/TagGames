@@ -1,17 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameScript : MonoBehaviour
 {
     [SerializeField] private Transform emptySpace = null;
     private Camera _camera;
     [SerializeField] private TilesScript[] tiles;
-    private int _emptySpaceIndex = 8;
+    private int _emptySpaceIndex;
     private bool _isFinished = false;
     [SerializeField] private GameObject _endPanel;
 
+    public int level;
+    private int _puzzleINt;
+    
     void Start()
     {
+        Application.targetFrameRate = 120;
+
+        if (level == 1)
+        {
+            _emptySpaceIndex = 8;
+            _puzzleINt = 8;
+        }
+        else if (level == 2)
+        {
+            _emptySpaceIndex = 15;
+            _puzzleINt = 15;
+        }
+        else if(level == 3)
+        {
+            _emptySpaceIndex = 24;
+            _puzzleINt = 24;
+        }
+        
+
+
         _camera = Camera.main;
         Shuffle();
     }
@@ -61,14 +85,14 @@ public class GameScript : MonoBehaviour
 
     public void Shuffle()
     {
-        if (_emptySpaceIndex != 8)
+        if (_emptySpaceIndex != _puzzleINt)
         {
-            var tileOn8LastPos = tiles[8].targetPosition;
-            tiles[8].targetPosition = emptySpace.position;
+            var tileOn8LastPos = tiles[_puzzleINt].targetPosition;
+            tiles[_puzzleINt].targetPosition = emptySpace.position;
             emptySpace.position = tileOn8LastPos;
-            tiles[_emptySpaceIndex] = tiles[8];
-            tiles[8] = null;
-            _emptySpaceIndex = 8;
+            tiles[_emptySpaceIndex] = tiles[_puzzleINt];
+            tiles[_puzzleINt] = null;
+            _emptySpaceIndex = _puzzleINt;
         }
         
         int invertion;
@@ -76,10 +100,10 @@ public class GameScript : MonoBehaviour
         do
         {
 
-            for (int i = 0; i <= 8; i++)
+            for (int i = 0; i <= _puzzleINt; i++)
             {
                 var lastPos = tiles[i].targetPosition;
-                int randomIndex = Random.Range(0, 8);
+                int randomIndex = Random.Range(0, _puzzleINt);
                 tiles[i].targetPosition = tiles[randomIndex].targetPosition;
                 tiles[randomIndex].targetPosition = lastPos;
                 var tile = tiles[i];
@@ -127,5 +151,10 @@ public class GameScript : MonoBehaviour
             inversionsSum += thisTileInvertion;
         }
         return inversionsSum;
+    }
+
+    public void LoadLevel(int level)
+    {
+        SceneManager.LoadScene(level);
     }
 }
